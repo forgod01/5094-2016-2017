@@ -18,7 +18,7 @@ For technical questions regarding the SDK, please visit the FTC Technology forum
 
   http://ftcforum.usfirst.org/forumdisplay.php?156-FTC-Technology
 
-**************************************************************************************
+*******************************************************************************************************************************
 
 Version 2.20 (released on 16.09.08)
   * Support for Modern Robotics Compass Sensor.
