@@ -34,7 +34,7 @@ Version 2.20 (released on 16.09.08)
      - Support for Light Sensor.
      - Support for Servo Controller.
 
-**************************************************************************************
+*****************************************************************************************
 
 Version 2.10 (released on 16.09.03)
  * Support for Adafruit IMU.
