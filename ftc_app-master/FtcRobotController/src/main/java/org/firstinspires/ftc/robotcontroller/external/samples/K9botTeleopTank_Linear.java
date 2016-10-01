@@ -64,7 +64,6 @@ public class K9botTeleopTank_Linear extends LinearOpMode {
     double          clawPosition    = robot.CLAW_HOME;                  // Servo safe position
     final double    CLAW_SPEED      = 0.01 ;                            // sets rate to move servo
     final double    ARM_SPEED       = 0.01 ;                            // sets rate to move servo
-    double will == 1;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -91,7 +90,6 @@ public class K9botTeleopTank_Linear extends LinearOpMode {
             right = -gamepad1.right_stick_y;
             robot.leftMotor.setPower(left);
             robot.rightMotor.setPower(right);
-            will += 1;
 
             // Use gamepad Y & A raise and lower the arm
             if (gamepad1.a)
