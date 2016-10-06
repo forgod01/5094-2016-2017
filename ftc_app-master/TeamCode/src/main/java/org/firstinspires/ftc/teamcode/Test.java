@@ -66,6 +66,9 @@ public class Test extends OpMode {
     double rightY;
     double rightX;
 
+    int ticks = 1180;
+    int RPM = 128;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -86,6 +89,17 @@ public class Test extends OpMode {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         rearLeft.setDirection(DcMotor.Direction.FORWARD);
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
+
+        rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+        frontLeft.setMaxSpeed(ticks * RPM);
+        rearLeft.setMaxSpeed(ticks * RPM);
+        frontRight.setMaxSpeed(ticks * RPM);
+        rearRight.setMaxSpeed(ticks * RPM);
 
 
         // eg: Set the drive motor directions:
