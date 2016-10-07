@@ -6,7 +6,7 @@ The FTC Robot Controller app is designed to work in conjunction with the FTC Dri
 The FTC Driver Station app is available through Google Play.
 
 To use this SDK, download/clone the entire project to your local computer.
-Use Android Studio to import the folder  ("Import project (Eclipse ADT, Gradle, etc.)").
+Use Android Studio to import the folder  ("Import project (Eclipse ADT, Gradle, etc.)")
 
 Documentation for the FTC SDK are included with this repository.  There is a subfolder called "doc" which contains several subfolders:
 
