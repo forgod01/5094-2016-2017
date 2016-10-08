@@ -35,22 +35,27 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-/*
- * This is a test TeleOp mode
- * Harrison Gieselman
- * Created 10/1/2016
- * Last Updated: 10/1/2016
+/**
+ * This file contains an example of an iterative (Non-Linear) "OpMode".
+ * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
+ * The names of OpModes appear on the menu of the FTC Driver Station.
+ * When an selection is made from the menu, the corresponding OpMode
+ * class is instantiated on the Robot Controller and executed.
+ *
+ * This particular OpMode just executes a basic Tank Drive Teleop for a PushBot
+ * It includes all the skeletal structure that all iterative OpModes contain.
+ *
+ * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
+ * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Test", group="Iterative Opmode")  // @Autonomous(...) is the other common choice
-
-public class Test extends OpMode {
-
+@TeleOp(name="Template: Iterative OpMode", group="Iterative Opmode")  // @Autonomous(...) is the other common choice
+//@Disabled
+public class AutonomousTest extends OpMode
+{
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -59,12 +64,6 @@ public class Test extends OpMode {
     private DcMotor frontRight = null;
     private DcMotor rearLeft = null;
     private DcMotor rearRight = null;
-
-    //gamepad value holder variables
-    double leftY;
-    double leftX;
-    double rightY;
-    double rightX;
 
     int ticks = 1180;
     int RPM = 128;
@@ -102,11 +101,6 @@ public class Test extends OpMode {
         rearRight.setMaxSpeed(ticks * RPM);
 
 
-        // eg: Set the drive motor directions:
-        // Reverse the motor that runs backwards when connected directly to the battery
-        // leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        //  rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        // telemetry.addData("Status", "Initialized");
     }
 
     /*
@@ -131,19 +125,11 @@ public class Test extends OpMode {
     public void loop() {
         telemetry.addData("Status", "Running: " + runtime.toString());
 
-        leftY = gamepad1.left_stick_y;
-        leftX = gamepad1.left_stick_x;
-        rightX = gamepad1.right_stick_x;
-
-        frontLeft.setPower(leftY - leftX + rightX);
-        frontRight.setPower(leftY + leftX - rightX);
-        rearLeft.setPower(leftY + leftX + rightX);
-        rearRight.setPower(leftY - leftX - rightX);
-
-        telemetry.addData("Front Left Ticks: ", frontLeft.getCurrentPosition());
-        telemetry.addData("Front Right Ticks: ", frontRight.getCurrentPosition());
-        telemetry.addData("Rear Left Ticks: ", rearLeft.getCurrentPosition());
-        telemetry.addData("Rear Right Ticks: ", rearRight.getCurrentPosition());
+        if (runtime.milliseconds() <= 3000){
+            forward(1);
+        } else {
+            stopMoving();
+        }
     }
 
     /*
@@ -151,6 +137,20 @@ public class Test extends OpMode {
      */
     @Override
     public void stop() {
+    }
+
+    public void forward(float power) {
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        rearLeft.setPower(power);
+        rearRight.setPower(power);
+    }
+
+    public void stopMoving() {
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        rearLeft.setPower(0);
+        rearRight.setPower(0);
     }
 
 }
