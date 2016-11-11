@@ -146,6 +146,22 @@ public class AutonomousTest extends OpMode
         rearRight.setPower(power);
     }
 
+    public void turn(float power){
+        frontLeft.setPower(-power);
+        frontRight.setPower(power);
+        rearLeft.setPower(-power);
+        rearRight.setPower(power);
+    }
+
+    public void strafe(float power){
+        frontLeft.setPower(-power);
+        frontRight.setPower(power);
+        rearLeft.setPower(power);
+        rearRight.setPower(-power);
+    }
+
+
+
     public void stopMoving() {
         frontLeft.setPower(0);
         frontRight.setPower(0);

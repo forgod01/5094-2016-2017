@@ -60,6 +60,8 @@ public class Test extends OpMode {
     private DcMotor rearLeft = null;
     private DcMotor rearRight = null;
 
+    private DcMotor fork = null;
+
     //gamepad value holder variables
     double leftY;
     double leftX;
@@ -85,10 +87,15 @@ public class Test extends OpMode {
         rearLeft = hardwareMap.dcMotor.get("rearleft");
         rearRight = hardwareMap.dcMotor.get("rearright");
 
+        fork = hardwareMap.dcMotor.get("fork");
+
+
         rearRight.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         rearLeft.setDirection(DcMotor.Direction.FORWARD);
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
+
+        fork.setDirection(DcMotor.Direction.FORWARD);
 
         rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -135,15 +142,18 @@ public class Test extends OpMode {
         leftX = gamepad1.left_stick_x;
         rightX = gamepad1.right_stick_x;
 
-        frontLeft.setPower(leftY - leftX + rightX);
-        frontRight.setPower(leftY + leftX - rightX);
-        rearLeft.setPower(leftY + leftX + rightX);
-        rearRight.setPower(leftY - leftX - rightX);
+        frontLeft.setPower(leftY + leftX + rightX);
+        frontRight.setPower(leftY - leftX - rightX);
+        rearLeft.setPower(leftY - leftX + rightX);
+        rearRight.setPower(leftY + leftX - rightX);
 
-        telemetry.addData("Front Left Ticks: ", frontLeft.getCurrentPosition());
-        telemetry.addData("Front Right Ticks: ", frontRight.getCurrentPosition());
-        telemetry.addData("Rear Left Ticks: ", rearLeft.getCurrentPosition());
-        telemetry.addData("Rear Right Ticks: ", rearRight.getCurrentPosition());
+        if(gamepad1.left_bumper) {
+            fork.setPower(.5);
+        } else if(gamepad1.right_bumper) {
+            fork.setPower(-.5);
+        } else{
+            fork.setPower(0);
+        }
     }
 
     /*
