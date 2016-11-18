@@ -47,7 +47,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Last Updated: 10/1/2016
  */
 
-@TeleOp(name="Test", group="Iterative Opmode")  // @Autonomous(...) is the other common choice
+@TeleOp(name="TeleOp V01", group="Iterative Opmode")  // @Autonomous(...) is the other common choice
 
 public class Test extends OpMode {
 
@@ -147,11 +147,16 @@ public class Test extends OpMode {
         rearLeft.setPower(leftY - leftX + rightX);
         rearRight.setPower(leftY + leftX - rightX);
 
+
         if(gamepad1.left_bumper) {
             fork.setPower(.5);
         } else if(gamepad1.right_bumper) {
             fork.setPower(-.5);
-        } else{
+        } else {
+            fork.setPower(-.5*gamepad1.right_trigger + .5*gamepad1.left_trigger);
+        }
+
+        if(!gamepad1.left_bumper && !gamepad1.right_bumper && gamepad1.left_trigger == 0 && gamepad1.right_trigger == 0){
             fork.setPower(0);
         }
     }
