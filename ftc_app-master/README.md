@@ -1,6 +1,8 @@
 # ftc_app
 FTC Android Studio project to create FTC Robot Controller app.
 
+Hello
+
 This is the FTC SDK that can be used to create an FTC Robot Controller app, with custom op modes.
 The FTC Robot Controller app is designed to work in conjunction with the FTC Driver Station app.
 The FTC Driver Station app is available through Google Play.
@@ -34,7 +36,7 @@ Version 2.20 (released on 16.09.08)
      - Support for Light Sensor.
      - Support for Servo Controller.
 
-**************************************************************************************
+*****************************************************************************************
 
 Version 2.10 (released on 16.09.03)
  * Support for Adafruit IMU.
