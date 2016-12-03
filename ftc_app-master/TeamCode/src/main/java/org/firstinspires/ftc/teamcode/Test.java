@@ -152,13 +152,12 @@ public class Test extends OpMode {
             fork.setPower(.5);
         } else if(gamepad1.right_bumper) {
             fork.setPower(-.5);
+        } else if(!gamepad1.left_bumper && !gamepad1.right_bumper && gamepad1.left_trigger == 0 && gamepad1.right_trigger == 0){
+            fork.setPower(0);
         } else {
             fork.setPower(-.5*gamepad1.right_trigger + .5*gamepad1.left_trigger);
         }
 
-        if(!gamepad1.left_bumper && !gamepad1.right_bumper && gamepad1.left_trigger == 0 && gamepad1.right_trigger == 0){
-            fork.setPower(0);
-        }
     }
 
     /*

@@ -1,23 +1,23 @@
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.GyroSensor;
-        import com.qualcomm.robotcore.util.ElapsedTime;
-        import com.qualcomm.robotcore.hardware.ColorSensor;
-        import com.qualcomm.robotcore.hardware.I2cAddr;
-        import com.qualcomm.robotcore.hardware.I2cDevice;
-        import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
-        import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.I2cDevice;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 /**
  * Created by Willy Tilly Fettkether  on 11/15/2016.
  */
 
-@Autonomous (name="Beacon Finder", group="Iterative Opmode")
-public class AutonomousBeaconFinder extends OpMode {
+@Autonomous (name="Sensor Readings", group="Iterative Opmode")
+public class SensorReadings extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -44,8 +44,11 @@ public class AutonomousBeaconFinder extends OpMode {
     I2cDevice FRONT;
     I2cDevice SIDE;
 
-    I2cDeviceSynch FRONTREADER;
-    I2cDeviceSynch SIDEREADER;
+    I2cDeviceSynch FRONTReader;
+    I2cDeviceSynch SIDEReader;
+
+    byte[] frontCache;
+    byte[] sideCache;
 
 
     int stage = 0;
@@ -103,11 +106,11 @@ public class AutonomousBeaconFinder extends OpMode {
         FRONT = hardwareMap.i2cDevice.get("front");
         SIDE = hardwareMap.i2cDevice.get("side");
 
-        FRONTREADER = new I2cDeviceSynchImpl(FRONT, FRONTADDR, false);
-        SIDEREADER = new I2cDeviceSynchImpl(SIDE, SIDEADDR, false);
+        FRONTReader = new I2cDeviceSynchImpl(FRONT, FRONTADDR, false);
+        SIDEReader = new I2cDeviceSynchImpl(SIDE, SIDEADDR, false);
 
-        FRONTREADER.engage();
-        SIDEREADER.engage();
+        FRONTReader.engage();
+        SIDEReader.engage();
 
 
     }
@@ -133,6 +136,18 @@ public class AutonomousBeaconFinder extends OpMode {
     @Override
     public void loop() {
 
+        frontCache = FRONTReader.read(RANGE_REG_START, RANGE_READ_LENGTH);
+        sideCache = SIDEReader.read(RANGE_REG_START, RANGE_READ_LENGTH);
+
+        telemetry.addData("Heading: ", gyro.getHeading());
+        telemetry.addData("Side Ultrasonic: ", sideCache[0] & 0xFF);
+        telemetry.addData("Side ODS: ", sideCache[1] & 0xFF);
+        telemetry.addData("Front Ultrasonic: ", frontCache[0] & 0xFF);
+        telemetry.addData("Side ODS: ", frontCache[1] & 0xFF);
+        telemetry.addData("Red: ", color.red());
+        telemetry.addData("Blue: ", color.blue());
+
+        telemetry.update();
     }
 
 
