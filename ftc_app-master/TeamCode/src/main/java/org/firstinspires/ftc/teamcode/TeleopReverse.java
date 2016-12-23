@@ -68,6 +68,8 @@ public class TeleopReverse extends OpMode {
     double rightY;
     double rightX;
 
+    boolean setState = false;
+
     int ticks = 1180;
     int RPM = 128;
 
@@ -144,10 +146,22 @@ public class TeleopReverse extends OpMode {
         leftX = gamepad1.left_stick_x;
         rightX = gamepad1.right_stick_x;
 
-        frontLeft.setPower(leftY + leftX - rightX);
-        rearLeft.setPower(leftY - leftX - rightX);
-        rearRight.setPower(leftY + leftX + rightX);
-        frontRight.setPower(leftY - leftX + rightX);
+        /*if(gamepad1.y) {
+            setState = !setState;
+        }*/
+        if(setState == false) {
+            frontLeft.setPower(leftY + leftX - rightX);
+            rearLeft.setPower(leftY - leftX - rightX);
+            rearRight.setPower(leftY + leftX + rightX);
+            frontRight.setPower(leftY - leftX + rightX);
+        } else {
+            frontLeft.setPower(-leftY - leftX - rightX);
+            rearLeft.setPower(-leftY + leftX - rightX);
+            rearRight.setPower(-leftY - leftX + rightX);
+            frontRight.setPower(-leftY + leftX + rightX);
+
+        }
+
 
 
         if(gamepad1.left_bumper) {
@@ -159,6 +173,8 @@ public class TeleopReverse extends OpMode {
         } else {
             fork.setPower(-.5*gamepad1.right_trigger + .5*gamepad1.left_trigger);
         }
+
+
 
     }
 
