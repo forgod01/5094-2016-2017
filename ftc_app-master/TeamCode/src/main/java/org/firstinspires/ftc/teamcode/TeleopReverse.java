@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotor;                                                                                                                          
@@ -61,6 +62,10 @@ public class TeleopReverse extends OpMode {
     private DcMotor rearRight = null;
 
     private DcMotor fork = null;
+    private DcMotor shooter = null;
+
+    private Servo loader = null;
+    float loaderPosition = 0;
 
     //gamepad value holder variables                                                                                                                                     
     double leftY;
@@ -72,6 +77,8 @@ public class TeleopReverse extends OpMode {
 
     int ticks = 1180;
     int RPM = 128;
+
+
 
     /*                                                                                                                                                                   
      * Code to run ONCE when the driver hits INIT                                                                                                                        
@@ -90,6 +97,7 @@ public class TeleopReverse extends OpMode {
         rearRight = hardwareMap.dcMotor.get("rearright");
 
         fork = hardwareMap.dcMotor.get("fork");
+        shooter = hardwareMap.dcMotor.get("shooter");
 
 
         rearRight.setDirection(DcMotor.Direction.FORWARD);
@@ -98,6 +106,7 @@ public class TeleopReverse extends OpMode {
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
 
         fork.setDirection(DcMotor.Direction.FORWARD);
+        shooter.setDirection(DcMotor.Direction.REVERSE);
 
         rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -107,10 +116,23 @@ public class TeleopReverse extends OpMode {
         fork.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
+
         frontLeft.setMaxSpeed(ticks * RPM);
         rearLeft.setMaxSpeed(ticks * RPM);
         frontRight.setMaxSpeed(ticks * RPM);
         rearRight.setMaxSpeed(ticks * RPM);
+
+        fork.setMaxSpeed(ticks * RPM);
+        shooter.setMaxSpeed(ticks * RPM);
+
+        loader = hardwareMap.servo.get("loader");
+
+        loader.setPosition(loaderPosition);
+
+        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+
 
 
         // eg: Set the drive motor directions:                                                                                                                           
@@ -133,6 +155,7 @@ public class TeleopReverse extends OpMode {
     @Override
     public void start() {
         runtime.reset();
+        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /*                                                                                                                                                                   
@@ -162,6 +185,27 @@ public class TeleopReverse extends OpMode {
 
         }
 
+        if (gamepad1.x) {
+            shooter.setPower(1);
+        } else if (gamepad1.y) {
+            shooter.setPower(-1);
+        } else {
+            shooter.setPower(0);
+        }
+
+        if (gamepad1.a) {
+            loaderPosition += .01;
+            if(loaderPosition > 1) {
+                loaderPosition = 1;
+            }
+            loader.setPosition(loaderPosition);
+        } else if(gamepad1.b) {
+            loaderPosition -= .01;
+            if(loaderPosition < 0) {
+                loaderPosition = 0;
+            }
+            loader.setPosition(loaderPosition);
+        }
 
 
         if(gamepad1.left_bumper) {
@@ -174,6 +218,8 @@ public class TeleopReverse extends OpMode {
             fork.setPower(-.5*gamepad1.right_trigger + .5*gamepad1.left_trigger);
         }
 
+        telemetry.addData("Servo Position:", loader.getPosition());
+        telemetry.addData("Shooter Encoder Ticks: ", shooter.getCurrentPosition());
 
 
     }

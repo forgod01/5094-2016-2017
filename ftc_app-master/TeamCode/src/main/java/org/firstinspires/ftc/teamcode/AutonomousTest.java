@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -66,6 +67,8 @@ public class AutonomousTest extends OpMode
     private DcMotor rearLeft = null;
     private DcMotor rearRight = null;
 
+    private DcMotor shooter = null;
+
     int ticks = 1180;
     int RPM = 128;
 
@@ -85,21 +88,31 @@ public class AutonomousTest extends OpMode
         rearLeft = hardwareMap.dcMotor.get("rearleft");
         rearRight = hardwareMap.dcMotor.get("rearright");
 
-        rearRight.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        rearLeft.setDirection(DcMotor.Direction.FORWARD);
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
+        shooter = hardwareMap.dcMotor.get("shooter");
+
+        rearRight.setDirection(DcMotor.Direction.FORWARD);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        rearLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+
+        shooter.setDirection(DcMotor.Direction.REVERSE);
 
         rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
 
         frontLeft.setMaxSpeed(ticks * RPM);
         rearLeft.setMaxSpeed(ticks * RPM);
         frontRight.setMaxSpeed(ticks * RPM);
         rearRight.setMaxSpeed(ticks * RPM);
+
+        shooter.setMaxSpeed(ticks * RPM);
+
+        shooter.setPower(1);
 
 
     }
@@ -126,7 +139,9 @@ public class AutonomousTest extends OpMode
     public void loop() {
         telemetry.addData("Status", "Running: " + runtime.toString());
 
-        if (runtime.milliseconds() <= 2300){
+        shooter.setTargetPosition(-1180*4);
+
+        if (runtime.milliseconds() >= 4300 && runtime.milliseconds() <=6300){
             forward(1);
         } else {
             stopMoving();

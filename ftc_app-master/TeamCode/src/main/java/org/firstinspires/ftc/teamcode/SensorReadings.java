@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by Willy Tilly Fettkether  on 11/15/2016.
@@ -32,6 +33,10 @@ public class SensorReadings extends OpMode {
 
     int ticks = 1180;
     int RPM = 128;
+
+    float position = 0;
+
+    Servo loader = null;
 
     ColorSensor colorSensor;
     GyroSensor gyro;
@@ -78,6 +83,7 @@ public class SensorReadings extends OpMode {
         frontRight.setMaxSpeed(ticks * RPM);
         rearRight.setMaxSpeed(ticks * RPM);*/
 
+
         colorSensor = hardwareMap.colorSensor.get("color");
         colorSensor.enableLed(true);
 
@@ -123,56 +129,9 @@ public class SensorReadings extends OpMode {
         telemetry.addData("Front ODS: ", front.cmOptical());
         telemetry.addData("Red: ", colorSensor.red());
         telemetry.addData("Blue: ", colorSensor.blue());
-        telemetry.addData("Front I2C", front.getI2cAddress());
-        telemetry.addData("Side I2C", side.getI2cAddress());
 
         telemetry.update();
     }
-
-
-    public void stage0(){
-
-    }
-
-
-
-
-
-   /* public void forward(float power) {
-        frontLeft.setPower(power);
-        frontRight.setPower(power);
-        rearLeft.setPower(power);
-        rearRight.setPower(power);
-    }
-
-    public void turn(float power){
-        frontLeft.setPower(-power);
-        frontRight.setPower(power);
-        rearLeft.setPower(-power);
-        rearRight.setPower(power);
-    }
-
-    public void strafe(float power){
-        frontLeft.setPower(-power);
-        frontRight.setPower(power);
-        rearLeft.setPower(power);
-        rearRight.setPower(-power);
-    }
-
-
-
-    public void stopMoving() {
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        rearLeft.setPower(0);
-        rearRight.setPower(0);
-    }*/
-
-
-
-
-
-
 
 }
 

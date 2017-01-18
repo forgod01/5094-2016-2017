@@ -20,8 +20,8 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
  * Created by Willy Tilly Fettkether  on 11/15/2016.
  */
 
-@Autonomous (name="Beacon Finder-Blue", group="Iterative Opmode")
-public class AutonomousBeaconFinder extends OpMode {
+@Autonomous (name="AutoShoot", group="Iterative Opmode")
+public class AutoShoot extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -138,39 +138,14 @@ public class AutonomousBeaconFinder extends OpMode {
 
         switch (stage) {
             case 0: stage0();
-                 break;
+                break;
             case 1: stage1();
                 break;
             case 2: stage2();
                 break;
             case 3: stage3();
                 break;
-            case 4: stage4();
-                break;
-            case 5: stage5();
-                break;
-            case 6: stage6();
-                break;
-            case 7: stage7();
-                break;
-            case 8: stage8();
-                break;
-            case 9: stage9();
-                break;
-            case 10: stage10();
-                break;
-            case 11: stage11();
-                break;
-            case 12: stage12();
-                break;
-            case 13: stage13();
-                break;
-            case 14: stage14();
-                break;
-            case 15: stage15();
-                break;
-            case 16: stage16();
-                break;
+
 
         }
 
@@ -213,145 +188,6 @@ public class AutonomousBeaconFinder extends OpMode {
         }
     }
 
-    public void stage4(){
-        if(front.cmUltrasonic() <= 80 || front.cmUltrasonic() >= 230){
-            forward(-.5);
-        }else{
-            stopMoving();
-            stage++;
-        }
-    }
-
-    public void stage5(){
-        if(gyro.getHeading() > 300 || gyro.getHeading() < 50){
-            turn(.4);
-        }else if(gyro.getHeading() > 270 || gyro.getHeading() < 50){
-            turn(.1);
-        } else if(gyro.getHeading() < 270 && gyro.getHeading() > 50){
-            turn(-.05);
-        } else {
-            stopMoving();
-            stage++;
-        }
-    }
-
-    public void stage6(){
-        if(!(front.cmUltrasonic() <= 40)){
-            forward(.5);
-        }else{
-            stopMoving();
-            stage++;
-        }
-    }
-
-    public void stage7(){
-        if(side.cmUltrasonic() > 200 ){
-            strafe(-.2);
-        }else{
-            stopMoving();
-            stage++;
-        }
-    }
-
-    public void stage8(){
-        if(!(front.cmUltrasonic() <= 15)){
-            forward(.2);
-        }else{
-            stopMoving();
-            stage++;
-        }
-    }
-
-    public void stage9(){
-        if(gyro.getHeading() > 300 || gyro.getHeading() < 50){
-            turn(.4);
-        }else if(gyro.getHeading() > 270 || gyro.getHeading() < 50){
-            turn(.1);
-        } else if(gyro.getHeading() < 270 && gyro.getHeading() > 50){
-            turn(-.05);
-        } else {
-            stopMoving();
-            stage++;
-        }
-    }
-
-    public void stage10() {
-        if(colorSensor.blue() >= 4){
-            if(!(front.cmUltrasonic() <= 5)){
-                forward(.2);
-            }else{
-                stopMoving();
-                stage++;
-            }
-        } else {
-            strafe(-.2);
-        }
-    }
-
-    public void stage11(){
-        if(!(front.cmUltrasonic() >= 20)){
-            forward(-.2);
-        }else{
-            stopMoving();
-            stage++;
-        }
-    }
-
-    public void stage12(){
-        if(front.cmUltrasonic() <= 20) {
-            forward(-.2);
-        }else if(side.cmUltrasonic() > 89 ){
-            strafe(-.5);
-        }else{
-            stopMoving();
-            stage++;
-        }
-    }
-
-    public void stage13(){
-        if(!(front.cmUltrasonic() <= 15)){
-            forward(.2);
-        }else{
-            stopMoving();
-            stage++;
-        }
-    }
-
-    public void stage14(){
-        if(gyro.getHeading() > 300 || gyro.getHeading() < 50){
-            turn(.4);
-        }else if(gyro.getHeading() > 270 || gyro.getHeading() < 50){
-            turn(.1);
-        } else if(gyro.getHeading() < 270 && gyro.getHeading() > 50){
-            turn(-.05);
-        } else {
-            stopMoving();
-            stage++;
-        }
-    }
-
-    public void stage15(){
-        if(colorSensor.blue() >= 4){
-            if(!(front.cmUltrasonic() <= 5)){
-                forward(.2);
-            }else{
-                stopMoving();
-                stage++;
-            }
-        } else {
-            strafe(-.2);
-        }
-    }
-
-    public void stage16(){
-        if(!(front.cmUltrasonic() >= 20)){
-            forward(-.2);
-        }else{
-            stopMoving();
-            stage++;
-        }
-    }
-
 
 
 
@@ -363,14 +199,14 @@ public class AutonomousBeaconFinder extends OpMode {
         rearRight.setPower(power);
     }
 
-    public void turn(double power){
+    public void turn(float power){
         frontLeft.setPower(-power);
         frontRight.setPower(power);
         rearLeft.setPower(-power);
         rearRight.setPower(power);
     }
 
-    public void strafe(double power){
+    public void strafe(float power){
         frontLeft.setPower(-power);
         frontRight.setPower(power);
         rearLeft.setPower(power);

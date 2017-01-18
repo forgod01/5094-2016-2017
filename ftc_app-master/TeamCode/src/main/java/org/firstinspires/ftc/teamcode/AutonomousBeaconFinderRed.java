@@ -20,8 +20,8 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
  * Created by Willy Tilly Fettkether  on 11/15/2016.
  */
 
-@Autonomous (name="Beacon Finder-Blue", group="Iterative Opmode")
-public class AutonomousBeaconFinder extends OpMode {
+@Autonomous (name="Beacon Finder-Red", group="Iterative Opmode")
+public class AutonomousBeaconFinderRed extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -138,7 +138,7 @@ public class AutonomousBeaconFinder extends OpMode {
 
         switch (stage) {
             case 0: stage0();
-                 break;
+                break;
             case 1: stage1();
                 break;
             case 2: stage2();
