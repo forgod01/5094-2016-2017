@@ -38,6 +38,7 @@ public class SensorReadings extends OpMode {
 
     Servo loader = null;
 
+    ColorSensor colorSensorBot;
     ColorSensor colorSensor;
     GyroSensor gyro;
 
@@ -87,6 +88,9 @@ public class SensorReadings extends OpMode {
         colorSensor = hardwareMap.colorSensor.get("color");
         colorSensor.enableLed(true);
 
+        colorSensorBot = hardwareMap.colorSensor.get("color_bot");
+        colorSensorBot.enableLed(true);
+
         gyro = hardwareMap.gyroSensor.get("gyro");
 
         gyro.calibrate();
@@ -129,6 +133,8 @@ public class SensorReadings extends OpMode {
         telemetry.addData("Front ODS: ", front.cmOptical());
         telemetry.addData("Red: ", colorSensor.red());
         telemetry.addData("Blue: ", colorSensor.blue());
+        telemetry.addData("Bottom Red: ", colorSensorBot.red());
+        telemetry.addData("Bottom Blue: ", colorSensorBot.blue());
 
         telemetry.update();
     }

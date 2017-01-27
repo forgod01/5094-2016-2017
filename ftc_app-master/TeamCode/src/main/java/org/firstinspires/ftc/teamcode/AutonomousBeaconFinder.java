@@ -65,6 +65,8 @@ public class AutonomousBeaconFinder extends OpMode {
          * to 'get' must correspond to the names assigned during the robot configuration
          * step (using the FTC Robot Controller app on the phone).
          */
+
+        //Initialize the motors and servos
         frontLeft  = hardwareMap.dcMotor.get("frontleft");
         frontRight = hardwareMap.dcMotor.get("frontright");
         rearLeft = hardwareMap.dcMotor.get("rearleft");
@@ -135,7 +137,7 @@ public class AutonomousBeaconFinder extends OpMode {
      */
     @Override
     public void loop() {
-
+        //A switch statement that decides which code block to load based on our current location in our routine.
         switch (stage) {
             case 0: stage0();
                  break;
@@ -205,7 +207,7 @@ public class AutonomousBeaconFinder extends OpMode {
     }
 
     public void stage3(){
-        if(shooter.getCurrentPosition() < 4329*2){
+        if(shooter.getCurrentPosition() < 4400*2.4){
             shooter.setPower(.5);
         } else {
             shooter.setPower(0);
@@ -236,7 +238,7 @@ public class AutonomousBeaconFinder extends OpMode {
     }
 
     public void stage6(){
-        if(!(front.cmUltrasonic() <= 40)){
+        if(!(front.cmUltrasonic() <= 48)){
             forward(.5);
         }else{
             stopMoving();
@@ -276,7 +278,10 @@ public class AutonomousBeaconFinder extends OpMode {
     }
 
     public void stage10() {
-        if(colorSensor.blue() >= 4){
+        if(!(front.cmUltrasonic() <= 11)){
+            forward(.2);
+        }
+        if(colorSensor.blue() >= 2){
             if(!(front.cmUltrasonic() <= 5)){
                 forward(.2);
             }else{
@@ -331,7 +336,10 @@ public class AutonomousBeaconFinder extends OpMode {
     }
 
     public void stage15(){
-        if(colorSensor.blue() >= 4){
+        if(!(front.cmUltrasonic() <= 11)){
+            forward(.2);
+        }
+        if(colorSensor.blue() >= 2){
             if(!(front.cmUltrasonic() <= 5)){
                 forward(.2);
             }else{
