@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 
 /**
- * Created by Willy Tilly Fettkether  on 11/15/2016.
+ * Created by Willy Tilly Fettkether and Harrison Gieselman  on 11/15/2016.
  */
 
 @Autonomous (name="Beacon Finder-Red", group="Iterative Opmode")
@@ -51,6 +51,8 @@ public class AutonomousBeaconFinderRed extends OpMode {
     int stage = 0;
 
     double timeholder = 0;
+
+    int position;
 
 
 
@@ -151,25 +153,27 @@ public class AutonomousBeaconFinderRed extends OpMode {
                 break;
             case 6: stage6();
                 break;
-            case 7: stage7();
+            case 7: stage65();
                 break;
-            case 8: stage8();
+            case 8: stage7();
                 break;
-            case 9: stage9();
+            case 9: stage8();
                 break;
-            case 10: stage10();
+            case 10: stage9();
                 break;
-            case 11: stage11();
+            case 11: stage10();
                 break;
-            case 12: stage12();
+            case 12: stage11();
                 break;
-            case 13: stage13();
+            case 13: stage12();
                 break;
-            case 14: stage14();
+            case 14: stage13();
                 break;
-            case 15: stage15();
+            case 15: stage14();
                 break;
-            case 16: stage16();
+            case 16: stage15();
+                break;
+            case 17: stage16();
                 break;
 
         }
@@ -205,7 +209,7 @@ public class AutonomousBeaconFinderRed extends OpMode {
     }
 
     public void stage3(){
-        if(shooter.getCurrentPosition() < 4329*2.4){
+        if(shooter.getCurrentPosition() < 4400*2.37){
             shooter.setPower(.5);
         } else {
             shooter.setPower(0);
@@ -214,7 +218,7 @@ public class AutonomousBeaconFinderRed extends OpMode {
     }
 
     public void stage4(){
-        if(front.cmUltrasonic() <= 80 || front.cmUltrasonic() >= 230){
+        if(front.cmUltrasonic() <= 75 || front.cmUltrasonic() >= 230){
             forward(-.5);
         }else{
             stopMoving();
@@ -225,9 +229,9 @@ public class AutonomousBeaconFinderRed extends OpMode {
     public void stage5(){
         if(gyro.getHeading() < 60 || gyro.getHeading() > 310){
             turn(-.4);
-        }else if(gyro.getHeading() < 90 || gyro.getHeading() >310){
+        }else if(gyro.getHeading() < 89 || gyro.getHeading() >310){
             turn(-.1);
-        } else if(gyro.getHeading() > 90 && gyro.getHeading() < 310){
+        } else if(gyro.getHeading() > 91 && gyro.getHeading() < 310){
             turn(.05);
         } else {
             stopMoving();
@@ -241,10 +245,20 @@ public class AutonomousBeaconFinderRed extends OpMode {
         }else{
             stopMoving();
             stage++;
+            position = frontLeft.getCurrentPosition();
         }
     }
 
-    public void stage8(){
+    public void stage65(){
+        if(Math.abs(frontLeft.getCurrentPosition() - position) < 300){
+            strafe(.2);
+        }else{
+            stopMoving();
+            stage++;
+        }
+    }
+
+    public void stage7(){
         if(side.cmUltrasonic() > 195 || side.cmUltrasonic() <= 180 ){
             strafe(.2);
         }else{
@@ -253,7 +267,7 @@ public class AutonomousBeaconFinderRed extends OpMode {
         }
     }
 
-    public void stage9(){
+    public void stage8(){
         if(!(front.cmUltrasonic() <= 15)){
             forward(.2);
         }else{
@@ -262,7 +276,7 @@ public class AutonomousBeaconFinderRed extends OpMode {
         }
     }
 
-    public void stage7(){
+    public void stage9(){
         if(gyro.getHeading() < 60 || gyro.getHeading() > 310){
             turn(-.4);
         }else if(gyro.getHeading() < 90 || gyro.getHeading() >310){
@@ -276,7 +290,7 @@ public class AutonomousBeaconFinderRed extends OpMode {
     }
 
     public void stage10() {
-        if(!(front.cmUltrasonic() <= 11)){
+        if(!(front.cmUltrasonic() <= 12)){
             forward(.2);
         }
         if(colorSensor.red() >= 2){
@@ -292,7 +306,7 @@ public class AutonomousBeaconFinderRed extends OpMode {
     }
 
     public void stage11(){
-        if(!(front.cmUltrasonic() >= 20)){
+        if (!(front.cmUltrasonic() >= 20)){
             forward(-.2);
         }else{
             stopMoving();
@@ -301,9 +315,12 @@ public class AutonomousBeaconFinderRed extends OpMode {
     }
 
     public void stage12(){
-        if(front.cmUltrasonic() <= 20) {
+        if(front.cmUltrasonic() >= 28) {
+            forward(0.2);
+        }else if (front.cmUltrasonic() <= 18){
             forward(-.2);
-        }else if(side.cmUltrasonic() > 83 ){
+        }
+        else if(side.cmUltrasonic() > 90 ){
             strafe(.5);
         }else{
             stopMoving();
@@ -312,6 +329,15 @@ public class AutonomousBeaconFinderRed extends OpMode {
     }
 
     public void stage13(){
+        if(!(front.cmUltrasonic() <= 15)){
+            forward(.2);
+        }else{
+            stopMoving();
+            stage++;
+        }
+    }
+
+    public void stage14(){
         if (gyro.getHeading() < 60 || gyro.getHeading() > 310){
             turn(-.4);
         }else if(gyro.getHeading() < 90 || gyro.getHeading() >310){
@@ -324,17 +350,8 @@ public class AutonomousBeaconFinderRed extends OpMode {
         }
     }
 
-    public void stage14(){
-        if(!(front.cmUltrasonic() <= 12)){
-            forward(.2);
-        }else{
-            stopMoving();
-            stage++;
-        }
-    }
-
     public void stage15(){
-        if(!(front.cmUltrasonic() <= 11)){
+        if(!(front.cmUltrasonic() <= 12)){
             forward(.2);
         }
         if(colorSensor.red() >= 2){
